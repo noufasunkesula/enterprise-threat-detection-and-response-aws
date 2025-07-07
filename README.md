@@ -24,14 +24,11 @@ A framework leveraging core AWS services to deliver continuous visibility, real-
   <img src="04-assets/cloudshell.png" width="50" title="CloudShell"/>
 </p>
 
-
-
-
 ## Architecture Overview
 
 This high-level flowchart provides a complete view of how various AWS services are integrated for proactive threat detection and automatic response.
 
-```
+```plaintext
 [IAM]
  (Identity Mgmt)
      │
