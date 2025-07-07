@@ -1,5 +1,7 @@
 # Enterprise Threat Detection & Auto-Response on AWS
 
+![AWS](https://img.shields.io/badge/built%20on-AWS-orange)
+
 A framework leveraging core AWS services to deliver continuous visibility, real-time threat detection, automated remediation, and streamlined alerting. Designed to align with modern enterprise security expectations—scalable, auditable, and operationally sound.
 
 > Domain-aligned structure across identity, network, detection, and response
@@ -9,23 +11,21 @@ A framework leveraging core AWS services to deliver continuous visibility, real-
 ## AWS Services Used
 
 <p align="center">
-  <!-- Row 1: 6 icons -->
-  <img src="04-assets/lambda.png" width="65" alt="Lambda"/>
-  <img src="04-assets/cloudtrail.png" width="65" alt="CloudTrail"/>
-  <img src="04-assets/cloudwatch.png" width="65" alt="CloudWatch"/>
-  <img src="04-assets/eventbridge.png" width="65" alt="EventBridge"/>
-  <img src="04-assets/sns.png" width="65" alt="SNS"/>
-  <img src="04-assets/guardduty.png" width="65" alt="GuardDuty"/>
+  <img src="04-assets/lambda.png" width="50" title="Lambda"/> &nbsp;
+  <img src="04-assets/cloudtrail.png" width="50" title="CloudTrail"/> &nbsp;
+  <img src="04-assets/cloudwatch.png" width="50" title="CloudWatch"/> &nbsp;
+  <img src="04-assets/eventbridge.png" width="50" title="EventBridge"/> &nbsp;
+  <img src="04-assets/sns.png" width="50" title="SNS"/> &nbsp;
+  <img src="04-assets/guardduty.png" width="50" title="GuardDuty"/> &nbsp;
+  <img src="04-assets/inspector.png" width="50" title="Inspector"/> &nbsp;
+  <img src="04-assets/config.png" width="50" title="Config"/> &nbsp;
+  <img src="04-assets/iam-identity-center.png" width="50" title="IAM"/> &nbsp;
+  <img src="04-assets/systems-manager.png" width="50" title="SSM"/> &nbsp;
+  <img src="04-assets/cloudshell.png" width="50" title="CloudShell"/>
 </p>
 
-<p align="center">
-  <!-- Row 2: 5 icons -->
-  <img src="04-assets/inspector.png" width="65" alt="Inspector"/>
-  <img src="04-assets/config.png" width="65" alt="Config"/>
-  <img src="04-assets/iam-identity-center.png" width="65" alt="IAM Identity Center"/>
-  <img src="04-assets/systems-manager.png" width="65" alt="Systems Manager"/>
-  <img src="04-assets/cloudshell.png" width="65" alt="CloudShell"/>
-</p>
+
+
 
 ## Architecture Overview
 
@@ -129,6 +129,7 @@ enterprise-threat-detection-auto-response/
 </details>
 
 ## Phase Breakdown
+![Coverage](https://img.shields.io/badge/coverage-6%20phases-blueviolet)
 
 ### Phase 01 – IAM Foundation (Security Hardening)
 
@@ -146,22 +147,18 @@ enterprise-threat-detection-auto-response/
 
 ### Phase 03 – Misconfiguration Detection & Remediation
 
-- Enabled AWS Config with the managed rule: s3-bucket-public-read-prohibited.
-- Created FixS3PublicAccess Lambda to remove public-read policies and enable Block Public Access on buckets.
-- Integrated AWS Config with Lambda via EventBridge for automated, event-driven remediation.
-- Verified Lambda execution and remediation success via CloudWatch Logs.
-- Captured screenshots from AWS Config, Amazon Inspector, and CloudTrail logs for documentation.
-- Enabled Amazon GuardDuty for real-time threat detection across AWS accounts.
-- Retrieved region-specific Detector ID to support sample threat simulation via CLI.
-- Simulated GuardDuty findings (e.g., Recon:EC2/PortScan) to test the detection-response pipeline.
-- Created EventBridge rule to capture specific GuardDuty findings and route them to Lambda.
-- Deployed GuardDutyResponseHandler Lambda to tag compromised EC2 instances as "Suspicious".
-- Attached IAM role with AmazonEC2FullAccess and AWSLambdaBasicExecutionRole to support tagging and logging.
-- Validated automatic invocation and tagging behavior using CloudWatch Logs.
-- Manually invoked Lambda using test payloads to verify function logic in isolation.
-- Increased Lambda timeout from 3 to 15 seconds to address execution failures.
-- Re-tested threat simulation to confirm end-to-end functionality and stability.
-- Verified graceful error handling for fake EC2 IDs (e.g., i-99999999) returned by sample data.
+- Enabled AWS Config rule s3-bucket-public-read-prohibited  
+- FixS3PublicAccess Lambda: auto-removes public-read access and enables Block Public Access  
+- Integrated EventBridge for real-time remediation triggers  
+- Verified actions via CloudWatch Logs  
+- Enabled GuardDuty for threat detection across all regions  
+- Simulated findings (e.g., Recon:EC2/PortScan) using CLI  
+- Routed GuardDuty alerts via EventBridge to custom Lambda  
+- GuardDutyResponseHandler Lambda: auto-tags EC2s as Suspicious  
+- IAM role: AmazonEC2FullAccess and AWSLambdaBasicExecutionRole  
+- Validated logic via logs and manual test events  
+- Extended Lambda timeout (3 to 15 seconds) to fix timeouts  
+- Re-tested simulations and handled fake EC2 IDs gracefully  
 
 ### Phase 04 – SOAR Lite: Event-Driven Remediation
 
